@@ -12,6 +12,7 @@
  * @return Move 
  */
 Move Random::get_move(State *state, int depth){
+	srand(time(NULL));
   if(!state->legal_actions.size())
     state->get_legal_actions();
   
