@@ -28,7 +28,7 @@ int State::evaluate(){
     }
   }
   int value = whiteValue - blackValue;
-  return value*(this->player*2-1);
+  return value;
 }
 
 

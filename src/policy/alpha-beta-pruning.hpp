@@ -4,8 +4,8 @@
 /**
  * @brief Policy class for minimax policy, 
  */
-class Minimax{
+class AlphaBetaPruning{
 public:
   static Move get_move(State *state, int depth);
-  static int minimax(State *state, int depth, bool isMax);
+  static int search(State *state, int depth, bool isMax, int alpha, int beta);
 };
