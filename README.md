@@ -1,1 +1,2 @@
-NTHU I2P3   MiniChess AI
+MiniChess AI
+Project from NTHU I2P3
