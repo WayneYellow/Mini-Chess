@@ -289,6 +289,7 @@ void add_axis(std::stringstream& ss){
 std::string State::encode_output(){
   std::stringstream ss;
   int now_piece;
+  //ss << this->player << " " << this->game_state << "\n";
   ss << "┌";
   for(int w=0; w<BOARD_W; w+=1){
     for(int h=0; h<PIECE_STR_LEN; h+=1)
@@ -479,11 +480,12 @@ int main(int argc, char** argv) {
           }
         }
       }
+      //TA's code seems to be wrong, the player should be the one who has more material
       if(white_material>black_material){
-        game.player = 1;
+        game.player = 0;
         game.game_state = WIN;
       }else if(white_material<black_material){
-        game.player = 0;
+        game.player = 1;
         game.game_state = WIN;
       }else{
         game.game_state = DRAW;
