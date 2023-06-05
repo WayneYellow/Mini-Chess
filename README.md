@@ -1,7 +1,7 @@
 # Mini-Chess AI
 ## Introduction
 
-This is a mini-chess AI. It uses the minimax algorithm with alpha-beta pruning to search the game tree. The evaluation function is a linear combination of several features. The AI is able to beat the random player 100% of the time and the greedy player 90% of the time.
+This is a mini-chess AI. It uses the minimax algorithm with alpha-beta pruning to search the game tree. The evaluation function is a linear combination of several features. The AI is able to beat the random player 100% of the time.
 
 ## How to run
 
