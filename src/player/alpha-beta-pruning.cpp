@@ -36,12 +36,12 @@ void read_board(std::ifstream& fin) {
 /**
  * @brief randomly choose a move and then write it into output file
  * 
- * @param fout 
+ * @param fout
  */
 void write_valid_spot(std::ofstream& fout) {
   // Keep updating the output until getting killed.
   while(true) {
-    auto move = AlphaBetaPruning::get_move(root, 5);
+    auto move = AlphaBetaPruning::get_move(root, 4);
     fout << move.first.first << " " << move.first.second << " "\
          << move.second.first << " " << move.second.second << std::endl;
     
