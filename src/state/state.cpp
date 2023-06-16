@@ -13,9 +13,9 @@ static const int material_table[7] = {0, 2, 6, 7, 8, 20, 100};
  * @return int 
  *
  */
-int State::evaluate(){
-  int whiteValue = 0;
-  int blackValue = 0;
+double State::evaluate(){
+  double whiteValue = 0;
+  double blackValue = 0;
   int piece = 0;
   for(size_t i=0; i<BOARD_H; i+=1){
     for(size_t j=0; j<BOARD_W; j+=1){
@@ -224,6 +224,18 @@ void State::get_legal_actions(){
   }
   std::cout << "\n";
   this->legal_actions = all_actions;
+}
+
+/**
+ * @brief sort the legal actions by velue
+ * 
+ */
+void State::sort_legal_actions(int is_white){
+  std::sort(this->legal_actions.begin(), this->legal_actions.end(), [this, is_white](Move a, Move b){
+    auto state_a = this->next_state(a);
+    auto state_b = this->next_state(b);
+    return  state_a->evaluate()*is_white > state_b->evaluate()*is_white;
+  });
 }
 
 const char piece_table[2][7][5] = {

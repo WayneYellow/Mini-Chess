@@ -14,6 +14,12 @@ Move AlphaBetaPruning::get_move(State *state, int depth){
   if(!state->legal_actions.size())
     state->get_legal_actions();
   bool player = state->player;
+  if(player){
+    state->sort_legal_actions(-1);
+  }
+  else{
+    state->sort_legal_actions(1);
+  }
   int max = 1000000*(player*2-1);
   Move result;
   if(depth == 0 || state->game_state == WIN)
