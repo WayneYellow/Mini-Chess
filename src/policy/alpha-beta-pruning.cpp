@@ -13,39 +13,18 @@
 Move AlphaBetaPruning::get_move(State *state, int depth){
   if(!state->legal_actions.size())
     state->get_legal_actions();
-  
-  if(state->player == 0){
-    int max = -1000000;
-    Move result;
-    if(depth == 0 || state->game_state == WIN){
-      result = state->legal_actions[0];
-    }
-    else{
-      for(auto action: state->legal_actions){
-        auto next_state = state->next_state(action);
-        int value = search(next_state, depth-1, false, -1000000, 1000000);
-        if(value > max){
-          max = value;
-          result = action;
-        }
-      }
-    }
-    return result;
-  }
+  bool player = state->player;
+  int max = 1000000*(player*2-1);
+  Move result;
+  if(depth == 0 || state->game_state == WIN)
+    result = state->legal_actions[0];
   else{
-    int min = 1000000;
-    Move result;
-    if(depth == 0 || state->game_state == WIN){
-      result = state->legal_actions[0];
-    }
-    else{
-      for(auto action: state->legal_actions){
-        auto next_state = state->next_state(action);
-        int value = search(next_state, depth-1, true, -1000000, 1000000);
-        if(value < min){
-          min = value;
-          result = action;
-        }
+    for(auto action: state->legal_actions){
+      auto next_state = state->next_state(action);
+      int value = search(next_state, depth-1, player, -1000000, 1000000);
+      if((player*2-1)*value < (player*2-1)*max){
+        max = value;
+        result = action;
       }
     }
     return result;
@@ -67,7 +46,7 @@ int AlphaBetaPruning::search(State *state, int depth, bool isMax, int alpha, int
     int max = -1000000;
     for(auto action: state->legal_actions){
       auto next_state = state->next_state(action);
-      int value = search(next_state, depth-1, false, alpha, beta);
+      int value = search(next_state, depth-1, !isMax, alpha, beta);
       if(value > max){
         max = value;
       }
@@ -81,7 +60,7 @@ int AlphaBetaPruning::search(State *state, int depth, bool isMax, int alpha, int
     int min = 1000000;
     for(auto action: state->legal_actions){
       auto next_state = state->next_state(action);
-      int value = search(next_state, depth-1, true, alpha, beta);
+      int value = search(next_state, depth-1, !isMax, alpha, beta);
       if(value < min){
         min = value;
       }
