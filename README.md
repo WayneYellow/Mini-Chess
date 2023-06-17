@@ -37,9 +37,12 @@ your environment must support make and g++ to run the AI.
 
 ## some results
 ### deepest depth reached
-``` player_random: 0```
-``` player_minimax: 4```
-``` player_alpha-beta-pruning: 7```
+``` player_random: 0```    
+
+``` player_minimax: 4```    
+
+``` player_alpha-beta-pruning: 7```    
+
 ``` player_IDDFS: 6~8```(adjustable by processing time)
 ### player_random vs player_minimax(depth 3)
 ```minimax wins: 100.00%```
