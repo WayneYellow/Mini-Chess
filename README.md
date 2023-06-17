@@ -26,7 +26,7 @@ make
 ./build/main ./build/[player1_execution_file] ./build/[player2_execution_file]
 ```
 
-note that there three player execution files available:
+note that there are three player execution files available:
 
 - player_random: a player that makes random moves
 - player_minimax: a player that uses minimax 
