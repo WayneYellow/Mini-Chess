@@ -6,7 +6,7 @@
 #include "../config.hpp"
 
 
-static const int material_table[7] = {0, 2, 6, 7, 8, 20, 100};
+static const double material_table[7] = {0, 2, 6.5, 7, 10, 20, 100};
 /**
  * @brief evaluate the state
  * 
@@ -24,9 +24,11 @@ double State::evaluate(){
     for(size_t j=0; j<BOARD_W; j+=1){
       if((piece=this->board.board[0][i][j])){
         whiteValue += material_table[piece];
+        whiteValue += piece_square_table[piece][i][j];
       }
       if((piece=this->board.board[1][i][j])){
         blackValue += material_table[piece];
+        blackValue += piece_square_table[piece][BOARD_H-1-i][BOARD_W-1-j];
       }
     }
   }

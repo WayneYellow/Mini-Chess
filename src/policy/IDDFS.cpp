@@ -4,7 +4,7 @@
 #include "../state/state.hpp"
 #include "./IDDFS.hpp"
 
-const std::chrono::milliseconds TIMEOUT_THRESHOLD(1000);
+const std::chrono::milliseconds TIMEOUT_THRESHOLD(700);
 /**
  * @brief Minimax algorithm with alpha-beta pruning
  * 
@@ -92,28 +92,16 @@ Move Policy::iterative_deepening(State *state){
     auto start = std::chrono::system_clock::now();
     auto end = std::chrono::system_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    int depth = 3;
-    Move currentMove;
-    Move bestMove;
-    double bestScore;
+    int depth = 5;
+    Move result;
     while(duration < TIMEOUT_THRESHOLD){
-        currentMove = get_move(state, depth);
+        result = get_move(state, depth);
         end = std::chrono::system_clock::now();
         duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         if(duration > TIMEOUT_THRESHOLD){
             break;
         }
-        int currentScore = state->next_state(currentMove)->evaluate();
-        if (currentScore == 1000000*(state->player*2-1)) {
-            bestMove = currentMove;
-            return bestMove;
-        }
-        if (currentScore == -1000000*(state->player*2-1)) {
-            return currentMove;
-        }
-
-        bestMove = currentMove;
         depth++;
     }
-    return bestMove;
+    return result;
 }
