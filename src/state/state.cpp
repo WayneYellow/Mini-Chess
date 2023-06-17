@@ -17,6 +17,9 @@ double State::evaluate(){
   double whiteValue = 0;
   double blackValue = 0;
   int piece = 0;
+  if(this->game_state == WIN){
+    return 1000000*(this->player*2-1);
+  }
   for(size_t i=0; i<BOARD_H; i+=1){
     for(size_t j=0; j<BOARD_W; j+=1){
       if((piece=this->board.board[0][i][j])){

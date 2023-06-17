@@ -3,7 +3,7 @@
 
 #include "../config.hpp"
 #include "../state/state.hpp"
-#include "../policy/random.hpp"
+#include "../policy/IDDFS.hpp"
 
 
 State* root;
@@ -36,13 +36,12 @@ void read_board(std::ifstream& fin) {
 /**
  * @brief randomly choose a move and then write it into output file
  * 
- * @param fout 
+ * @param fout
  */
 void write_valid_spot(std::ofstream& fout) {
   // Keep updating the output until getting killed.
   while(true) {
-    // Choose a random spot.
-    auto move = Random::get_move(root, 0);
+    auto move = Policy::iterative_deepening(root);
     fout << move.first.first << " " << move.first.second << " "\
          << move.second.first << " " << move.second.second << std::endl;
     
@@ -60,9 +59,7 @@ void write_valid_spot(std::ofstream& fout) {
  * @return int 
  */
 int main(int, char** argv) {
-  //srand(RANDOM_SEED);
-  srand(time(NULL));
-  //srand(123);
+  srand(RANDOM_SEED);
   std::ifstream fin(argv[1]);
   std::ofstream fout(argv[2]);
 
