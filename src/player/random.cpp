@@ -60,8 +60,8 @@ void write_valid_spot(std::ofstream& fout) {
  * @return int 
  */
 int main(int, char** argv) {
-  srand(RANDOM_SEED);
-  //srand(time(NULL));
+  //srand(RANDOM_SEED);
+  srand(time(NULL));
   //srand(123);
   std::ifstream fin(argv[1]);
   std::ofstream fout(argv[2]);

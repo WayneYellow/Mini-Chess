@@ -3,7 +3,7 @@
 
 #include "../config.hpp"
 #include "../state/state.hpp"
-#include "../policy/alpha-beta-pruning.hpp"
+#include "../policy/IDDFS.hpp"
 
 
 State* root;
@@ -41,7 +41,7 @@ void read_board(std::ifstream& fin) {
 void write_valid_spot(std::ofstream& fout) {
   // Keep updating the output until getting killed.
   while(true) {
-    auto move = AlphaBetaPruning::get_move(root, 6);
+    auto move = Policy::iterative_deepening(root);
     fout << move.first.first << " " << move.first.second << " "\
          << move.second.first << " " << move.second.second << std::endl;
     

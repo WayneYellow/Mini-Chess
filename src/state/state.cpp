@@ -6,24 +6,29 @@
 #include "../config.hpp"
 
 
-static const int material_table[7] = {0, 2, 6, 7, 8, 20, 100};
+static const double material_table[7] = {0, 2, 6.5, 7, 10, 20, 100};
 /**
  * @brief evaluate the state
  * 
  * @return int 
  *
  */
-int State::evaluate(){
-  int whiteValue = 0;
-  int blackValue = 0;
+double State::evaluate(){
+  double whiteValue = 0;
+  double blackValue = 0;
   int piece = 0;
+  if(this->game_state == WIN){
+    return 1000000*(this->player*2-1);
+  }
   for(size_t i=0; i<BOARD_H; i+=1){
     for(size_t j=0; j<BOARD_W; j+=1){
       if((piece=this->board.board[0][i][j])){
         whiteValue += material_table[piece];
+        whiteValue += piece_square_table[piece][i][j];
       }
       if((piece=this->board.board[1][i][j])){
         blackValue += material_table[piece];
+        blackValue += piece_square_table[piece][BOARD_H-1-i][BOARD_W-1-j];
       }
     }
   }
@@ -224,6 +229,18 @@ void State::get_legal_actions(){
   }
   std::cout << "\n";
   this->legal_actions = all_actions;
+}
+
+/**
+ * @brief sort the legal actions by velue
+ * 
+ */
+void State::sort_legal_actions(int is_white){
+  std::sort(this->legal_actions.begin(), this->legal_actions.end(), [this, is_white](Move a, Move b){
+    auto state_a = this->next_state(a);
+    auto state_b = this->next_state(b);
+    return  state_a->evaluate()*is_white > state_b->evaluate()*is_white;
+  });
 }
 
 const char piece_table[2][7][5] = {

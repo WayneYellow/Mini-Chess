@@ -1,8 +1,10 @@
 #include <cstdlib>
+#include <chrono>
 
 #include "../state/state.hpp"
-#include "./alpha-beta-pruning.hpp"
+#include "./IDDFS.hpp"
 
+const std::chrono::milliseconds TIMEOUT_THRESHOLD(700);
 /**
  * @brief Minimax algorithm with alpha-beta pruning
  * 
@@ -10,7 +12,7 @@
  * @param depth 
  * @return Move 
  */
-Move AlphaBetaPruning::get_move(State *state, int depth){
+Move Policy::get_move(State *state, int depth){
   if(!state->legal_actions.size())
     state->get_legal_actions();
   bool player = state->player;
@@ -37,7 +39,7 @@ Move AlphaBetaPruning::get_move(State *state, int depth){
   }
 }
 
-int AlphaBetaPruning::search(State *state, int depth, bool isMax, int alpha, int beta){
+int Policy::search(State *state, int depth, bool isMax, int alpha, int beta){
   
   if(state->game_state == WIN && isMax){
     return 1000000;
@@ -77,4 +79,29 @@ int AlphaBetaPruning::search(State *state, int depth, bool isMax, int alpha, int
     }
     return min;
   }
+}
+
+/**
+ * @brief Iterative deepening depth-first search with time limit
+ * 
+ * @param state 
+ * @param depth 
+ * @return int 
+ */
+Move Policy::iterative_deepening(State *state){
+    auto start = std::chrono::system_clock::now();
+    auto end = std::chrono::system_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    int depth = 5;
+    Move result;
+    while(duration < TIMEOUT_THRESHOLD){
+        result = get_move(state, depth);
+        end = std::chrono::system_clock::now();
+        duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        if(duration > TIMEOUT_THRESHOLD){
+            break;
+        }
+        depth++;
+    }
+    return result;
 }
